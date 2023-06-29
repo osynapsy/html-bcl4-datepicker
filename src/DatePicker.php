@@ -12,6 +12,7 @@
 namespace Osynapsy\Bcl4\DatePicker;
 
 use Osynapsy\Html\Component\AbstractComponent;
+use Osynapsy\Bcl4\TextBox;
 
 class DatePicker extends AbstractComponent
 {    
@@ -23,10 +24,10 @@ class DatePicker extends AbstractComponent
     {               
         parent::__construct('div', $id.'_datepicker');
         $this->datePickerId = $id;
-        $this->requireCss('Lib/bootstrap-datetimejs-4.17.37/bootstrap-datetimejs.css');
-        $this->requireJs('Lib/momentjs-2.17.1/moment.js');
-        $this->requireJs('Lib/bootstrap-datetimejs-4.17.37/bootstrap-datetimejs.js');
-        $this->requireJs('Bcl4/DatePicker/script.js');
+        $this->requireCss('lib/bootstrap-datetimejs-4.17.37/bootstrap-datetimejs.css');
+        $this->requireJs('lib/bootstrap-datetimejs-4.17.37/bootstrap-datetimejs.js');
+        $this->requireJs('lib/momentjs-2.17.1/moment.js');
+        $this->requireJs('bcl4/datepicker/script.js');
         $this->addClass('input-group');
         $this->dateComponent = $this->add($this->textBoxFactory($id));
         $this->add($this->iconFactory());
@@ -36,7 +37,18 @@ class DatePicker extends AbstractComponent
     protected function textBoxFactory($id)
     {
         $TextBox = new TextBox($id);
-        $TextBox->addClass('date date-picker form-control');
+        $TextBox->addClass('date date-picker');
+        $TextBox->formatValueFunction = function($value)
+        {
+            if (empty($value)) {
+                return $value;
+            }
+            $dateTimeParts = explode(' ', $value);
+            $dateParts = explode('-', $dateTimeParts[0]);
+            if (count($dateParts) >= 3 && strlen($dateParts[0]) == 4) {
+                return $dateParts[2].'/'.$dateParts[1].'/'.$dateParts[0].(empty($dateTimeParts[1]) ? '' : " {$dateTimeParts[1]}");
+            }
+        };
         return $TextBox;
     }
 
