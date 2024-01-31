@@ -25,8 +25,8 @@ class DatePicker extends AbstractComponent
         parent::__construct('div', $id.'_datepicker');
         $this->datePickerId = $id;
         $this->requireCss('lib/bootstrap-datetimejs-4.17.37/bootstrap-datetimejs.css');
-        $this->requireJs('lib/bootstrap-datetimejs-4.17.37/bootstrap-datetimejs.js');
         $this->requireJs('lib/momentjs-2.17.1/moment.js');
+        $this->requireJs('lib/bootstrap-datetimejs-4.17.37/bootstrap-datetimejs.js');
         $this->requireJs('bcl4/datepicker/script.js');
         $this->addClass('input-group');
         $this->dateComponent = $this->add($this->textBoxFactory($id));
