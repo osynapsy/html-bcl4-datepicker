@@ -15,13 +15,13 @@ use Osynapsy\Html\Component\AbstractComponent;
 use Osynapsy\Bcl4\TextBox;
 
 class DatePicker extends AbstractComponent
-{    
+{
     private $datePickerId;
     private $dateComponent;
     protected $defaultValue;
 
     public function __construct($id, $format = 'DD/MM/YYYY')
-    {               
+    {
         parent::__construct('div', $id.'_datepicker');
         $this->datePickerId = $id;
         $this->requireCss('lib/bootstrap-datetimejs-4.17.37/bootstrap-datetimejs.css');
@@ -86,7 +86,7 @@ class DatePicker extends AbstractComponent
      */
     public function setDateMax($date)
     {
-        $this->dateComponent->att('data-max', $date);
+        $this->dateComponent->attribute('data-max', $date);
     }
 
     /**
@@ -95,7 +95,7 @@ class DatePicker extends AbstractComponent
      */
     public function setDateMin($date)
     {
-        $this->dateComponent->att('data-min', $date);
+        $this->dateComponent->attribute('data-min', $date);
     }
 
     public function setFormat($format)
@@ -104,7 +104,7 @@ class DatePicker extends AbstractComponent
     }
 
     public function setDefaultDate($date = null)
-    {        
+    {
         $this->defaultValue = empty($date) ? date('d/m/Y') : $date;
     }
 
@@ -115,7 +115,7 @@ class DatePicker extends AbstractComponent
 
     public function onChange($code)
     {
-        $this->dateComponent->setClass('datepicker-change')->att('onchange', $code);
+        $this->dateComponent->addClass('datepicker-change')->attribute('onchange', $code);
     }
 
     public function getTextBox()
