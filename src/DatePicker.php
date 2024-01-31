@@ -29,24 +29,37 @@ class DatePicker extends AbstractComponent
         $this->requireJs('lib/bootstrap-datetimejs-4.17.37/bootstrap-datetimejs.js');
         $this->requireJs('bcl4/datepicker/script.js');
         $this->addClass('input-group');
-        $this->dateComponent = $this->add($this->textBoxFactory($id));
+        $this->dateComponent = $this->add($this->fieldDateBoxFactory($id));
         $this->add($this->iconFactory());
         $this->setFormat($format);
     }
 
-    protected function textBoxFactory($id)
+        protected function fieldDateBoxFactory($tid)
     {
-        $TextBox = new TextBox($id);
-        $TextBox->addClass('date date-picker');
-        $TextBox->formatValueFunction = function($value)
+        $TextBox = new class ($tid) extends TextBox
         {
-            if (empty($value)) {
-                return $value;
+            public function __construct($id)
+            {
+                $this->formatValueFunction = [$this, 'formatDateValue'];
+                parent::__construct($id);
+                $this->attributes([
+                    'class' => 'form-control datetimepicker-input text-center',
+                    'data-toggle' => 'datetimepicker',
+                    'data-target' => sprintf('#%s',$id)
+                ]);
             }
-            $dateTimeParts = explode(' ', $value);
-            $dateParts = explode('-', $dateTimeParts[0]);
-            if (count($dateParts) >= 3 && strlen($dateParts[0]) == 4) {
-                return $dateParts[2].'/'.$dateParts[1].'/'.$dateParts[0].(empty($dateTimeParts[1]) ? '' : " {$dateTimeParts[1]}");
+
+            public function formatDateValue($value)
+            {
+                if (empty($value)) {
+                    return $value;
+                }
+                try {
+                    $format = 'd/m/Y';
+                    return (new \DateTime($value))->format($format);
+                } catch (\Exception $e) {
+                    return '';
+                }
             }
         };
         return $TextBox;
