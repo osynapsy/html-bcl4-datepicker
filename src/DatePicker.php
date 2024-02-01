@@ -43,7 +43,7 @@ class DatePicker extends AbstractComponent
                 $this->formatValueFunction = [$this, 'formatDateValue'];
                 parent::__construct($id);
                 $this->attributes([
-                    'class' => 'form-control datetimepicker-input text-center',
+                    'class' => 'form-control date-picker datetimepicker-input text-center',
                     'data-toggle' => 'datetimepicker',
                     'data-target' => sprintf('#%s',$id)
                 ]);
@@ -67,7 +67,7 @@ class DatePicker extends AbstractComponent
 
     protected function iconFactory()
     {
-        return '<div class="input-group-append"><span class="input-group-text"><i class="glyphicon glyphicon-calendar"></i></span></div>';
+        return '<div class="input-group-append"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>';
     }
 
     public function preBuild()
