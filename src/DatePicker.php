@@ -34,7 +34,7 @@ class DatePicker extends AbstractComponent
         $this->setFormat($format);
     }
 
-        protected function fieldDateBoxFactory($tid)
+    protected function fieldDateBoxFactory($tid)
     {
         $TextBox = new class ($tid) extends TextBox
         {
@@ -79,7 +79,7 @@ class DatePicker extends AbstractComponent
 
     public function setAction($action, $parameters = null, $confirmMessage = null, $class = 'change-execute datepicker-change')
     {
-        $this->dateComponent->setAction($action, $parameters, $class, $confirmMessage);
+        $this->getTextBox()->setAction($action, $parameters, $confirmMessage, $class);
     }
 
     /**
