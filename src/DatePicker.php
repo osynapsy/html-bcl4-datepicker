@@ -51,15 +51,13 @@ class DatePicker extends AbstractComponent
 
             public function formatDateValue($value)
             {
-                if (empty($value)) {
-                    return $value;
+                foreach(['d/m/Y','Y-m-d'] as $f) {
+                    $odatetime = \DateTime::createFromFormat($f, $value);
+                    if ($odatetime) {
+                        return $odatetime->format('d/m/Y H:i');
+                    }
                 }
-                try {
-                    $format = 'd/m/Y';
-                    return (new \DateTime($value))->format($format);
-                } catch (\Exception $e) {
-                    return '';
-                }
+                return $value;
             }
         };
         return $TextBox;
